@@ -1,0 +1,31 @@
+<mat-spinner *ngIf="users == undefined" class="spinnerStyle"></mat-spinner>
+<mat-list flex *ngIf="users" class="listStyle">
+
+  <h3 mat-subheader>Users</h3>
+  <h3 mat-subheader *ngIf="users.length == 0">0 users found.</h3>
+  <mat-form-field class="inputStyle">
+      <input matInput placeholder="Search" [(ngModel)]="searchTerm" name="filterSearchTerm" >
+  </mat-form-field>
+  <mat-list-item *ngFor="let user of users | search:searchTerm | slice: 0:limit">
+    <img matListAvatar
+        src="{{user.profile_picture}}"
+        onerror="this.src='../../assets/img/default.jpg'"
+        alt="{{user.short_name + ' ' + user.full_name}}"/>
+
+    <h4 mat-line
+        class="{{ getColorGender(user.gender) }}">{{user.short_name + " " + user.full_name}}</h4>
+    <p mat-line> {{user.short_me}} </p>
+    <button mat-icon-button disabled title="{{ getStatusTitle(user.status) }}">
+        <mat-icon class="material-icons {{ getColorStatus(user.status) }}">account_circle</mat-icon>
+    </button>
+    <button mat-icon-button [routerLink]="['/userdetail', user.id ]" title="Show comments">
+        <mat-icon>message</mat-icon>
+    </button>
+  </mat-list-item>
+
+  <div class="button-row">
+    <button mat-button class="loadButton" *ngIf="users.length > 0"
+            color="primary" disabled="{{disableLoadMore}}"
+            (click)="loadMore()">Load more</button>
+  </div>
+</mat-list>

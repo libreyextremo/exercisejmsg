@@ -1,27 +1,66 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, inject, async } from '@angular/core/testing';
+import { Component, DebugElement } from "@angular/core";
+import { By } from "@angular/platform-browser";
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material.module';
+import { routing } from './app.routes';
+import { UserlistComponent } from './userlist/userlist.component';
+import { UserdetailComponent } from "./userdetail/userdetail.component";
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { CommentstatePipe } from './commentstate.pipe';
+import { SearchPipe } from './search.pipe';
+
+import { APP_BASE_HREF } from '@angular/common';
 import { AppComponent } from './app.component';
-describe('AppComponent', () => {
+import { FormsModule } from '@angular/forms';
+
+describe('Component: AppComponent', () => {
+
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let spanEl: DebugElement;
+  let buttonEl: DebugElement;
+  //let passwordEl: DebugElement;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent,
+        UserlistComponent,
+        UserdetailComponent,
+        CommentstatePipe,
+        SearchPipe
       ],
+      imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        HttpModule,
+        ReactiveFormsModule,
+        routing,
+        FormsModule
+      ],
+      providers: [
+        { provide: APP_BASE_HREF, useValue : '/' }
+      ]
     }).compileComponents();
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.debugElement.componentInstance;
   }));
+
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   }));
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+
+  it('should have span title and button home', async(() => {
+    spanEl = fixture.debugElement.query(By.css('span'));
+    buttonEl= fixture.debugElement.query(By.css('button'));
+
+    expect(spanEl).toBeDefined();
+    expect(buttonEl).toBeDefined();
+    expect(buttonEl.nativeElement.value).toEqual(""); // button.value = "" because contains an icon
   }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!');
-  }));
+
 });

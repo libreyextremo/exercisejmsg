@@ -1,0 +1,90 @@
+<mat-spinner *ngIf="user == undefined" class="spinnerStyle"></mat-spinner>
+<form *ngIf="user" class="formStyle"
+  [formGroup]="postCommentForm"
+  (ngSubmit) = "onSubmit(postCommentForm.value)">
+  <h3 mat-subheader>User information</h3>
+  <img mat-card-image src="{{user.profile_picture}}"
+      onerror="this.src='../../assets/img/default.jpg'"
+      alt="{{user.short_name + ' ' + user.full_name}}"
+      height='128px' width='128px'>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Short name" value="{{user.short_name}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Full name" value="{{user.full_name}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="About me" value="{{user.short_me}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Gender" value="{{getGenderTitle(user.gender)}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Status" value="{{getStatusTitle(user.status)}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Email" value="{{user.email}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Location" value="{{user.location}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Creation date" value="{{user.created | date: 'shortDate'}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Modification date" value="{{user.modified | date: 'shortDate'}}">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput readonly placeholder="Joining date" value="{{user.date_joined | date: 'shortDate'}}">
+  </mat-form-field>
+
+
+
+<div class="postComment">
+  <h3 mat-subheader>Post a comment</h3>
+  <mat-form-field class="user-full-width">
+    <input matInput placeholder="User" value="" required formControlName="userCommentForm">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <input matInput placeholder="Subject" value="" required formControlName="subjectCommentForm">
+  </mat-form-field>
+  <mat-form-field class="user-full-width">
+    <textarea matInput placeholder="Body" required formControlName="bodyCommentForm"></textarea>
+  </mat-form-field>
+  <div>
+    <label>Rating: </label>
+    <mat-radio-group formControlName="floatPlaceholder" required formControlName="ratingCommentForm">
+      <mat-radio-button value="0">0 stars</mat-radio-button>
+      <mat-radio-button value="1">1 stars</mat-radio-button>
+      <mat-radio-button value="2">2 stars</mat-radio-button>
+      <mat-radio-button value="3">3 stars</mat-radio-button>
+      <mat-radio-button value="4">4 stars</mat-radio-button>
+      <mat-radio-button value="5">5 stars</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <br>
+  <button mat-button type="submit">Send comment</button>
+</div>
+
+<h3 *ngIf="user"  mat-subheader class="commentsStyle">Comments</h3>
+<mat-list dense *ngIf="user" class="commentsStyle">
+  <mat-list-item *ngFor="let comment of user.comments">
+    <h3 matLine>
+      <i *ngIf="comment.rating < 1" class="material-icons pink">favorite_border</i>
+      <i *ngIf="comment.rating >= 1" class="material-icons pink">favorite</i>
+      <i *ngIf="comment.rating < 2" class="material-icons pink">favorite_border</i>
+      <i *ngIf="comment.rating >= 2" class="material-icons pink">favorite</i>
+      <i *ngIf="comment.rating < 3" class="material-icons pink">favorite_border</i>
+      <i *ngIf="comment.rating >= 3" class="material-icons pink">favorite</i>
+      <i *ngIf="comment.rating < 4" class="material-icons pink">favorite_border</i>
+      <i *ngIf="comment.rating >= 4" class="material-icons pink">favorite</i>
+      <i *ngIf="comment.rating < 5" class="material-icons pink">favorite_border</i>
+      <i *ngIf="comment.rating >= 5" class="material-icons pink">favorite</i>
+      <strong>User: {{comment.user}}</strong> --{{comment.status | commentstate}}--
+      ({{comment.created | date: 'shortDate'}})
+    </h3>
+    <p matLine>Subject: {{comment.subject}} </p>
+    <p matLine>Comment: {{comment.body}} </p>
+  </mat-list-item>
+</mat-list>
+</form>

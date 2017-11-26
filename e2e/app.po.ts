@@ -5,7 +5,21 @@ export class AppPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  getSpanTitle() {
+    return element(by.css('app-root span')).getText();
   }
+
+  clickUserCommentButton() {
+    return element(by.cssContainingText('button', 'message')).click();
+  }
+
+  getH3Text() {
+    return element(by.css('app-root h3')).getText();
+  }
+
+  getCommentButton() {
+    return element(by.cssContainingText('button', 'message')).getText();
+  }
+
+
 }

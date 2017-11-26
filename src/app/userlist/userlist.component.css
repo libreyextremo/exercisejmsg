@@ -1,0 +1,38 @@
+.pink { color: #FF69B4; }
+.blue { color: #1E90FF; }
+.grey { color: #808080; }
+.green { color: #00FF00; }
+.darkgreen { color: #008000; }
+.orange { color: #FF8C00; }
+.yellow { color: #FFFF00; }
+.red { color: #FF0000; }
+
+.button-row {
+  margin: auto;
+  width: 150px;
+  padding: 10px;
+}
+
+.inputStyle {
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+}
+
+.listStyle {
+  margin: auto;
+  width: 600px;
+  padding: 10px;
+}
+
+.loadButton {
+  width: 150px;
+}
+
+.spinnerStyle {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+}
